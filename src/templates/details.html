@@ -1,0 +1,42 @@
+
+    <template id="podcast_detail_page">
+      <div class="wrapper container" v-show="haveData">
+        <div class="row">
+          <aside class="col-lg-4 mb-4">
+            <div class="card">
+              <img class="card-img-top" :src="transformUrl(podcastDetails.artworkUrl100)" />
+              <div class="card-body">
+                <hr/>
+                <h5 class="card-title">{{ podcastDetails.collectionName }}</h5>
+                <h6 class="card-subtitle mb-2 font-italic">by {{ podcastDetails.artistName }}</h6>
+                <hr/>
+                <h6 class="mt-2 mb-2">Description:</h6>
+                <div class="card-text" v-html="podcastDetails.description"></div>
+              </div>
+            </div>
+          </aside>
+          <section class="col mb-4">
+            <h4 class="border rounded p-3 mb-3">Episodes: {{ podcastDetails.trackCount }}</h3>
+
+            <div class="border rounded p-3">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th width="60%" scope="col">Title</th>
+                    <th width="20%" scope="col">Date</th>
+                    <th width="20%" scope="col">Duration</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item, index) in podcastDetails.episodes" :key="index">
+                    <td><a :href="'./podcast/' + podcastId + '/episode/' + episodeIdConvert(index)">{{ item.title }}</a></td>
+                    <td>{{ item.date }}</td>
+                    <td class="text-center">{{ item.media.duration }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </sectiom>
+        </div>
+      </div>
+    </template>

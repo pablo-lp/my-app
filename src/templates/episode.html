@@ -1,0 +1,33 @@
+
+    <template id="episode_detail_page">
+      <div class="wrapper container" v-show="haveData">
+        <div class="row">
+          <aside class="col-lg-4 mb-4">
+            <div class="card">
+              <img class="card-img-top" :src="transformUrl(podcastDetails.artworkUrl100)" />
+              <div class="card-body">
+                <hr/>
+                <h5 class="card-title">{{ podcastDetails.collectionName }}</h5>
+                <h6 class="card-subtitle mb-2 font-italic">by {{ podcastDetails.artistName }}</h6>
+                <hr/>
+                <h6 class="mt-2 mb-2">Description:</h6>
+                <div class="card-text" v-html="podcastDetails.description"></div>
+              </div>
+            </div>
+          </aside>
+          <section class="col mb-4">
+            <div class="border rounded p-3">
+              <h5>{{ episode.title }}</h5>
+              <div class="text-truncate" v-html="episode.description"></div>
+
+              <hr/>
+
+              <audio controls>
+                <source :src="episode.media.link" :type="episode.media.type">
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          </sectiom>
+        </div>
+      </div>
+    </template>

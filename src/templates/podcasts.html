@@ -1,0 +1,28 @@
+
+    <template id="podcasts_list">
+      <section class="wrapper container" v-show="haveData">
+
+        <div class="d-flex flex-row-reverse mb-4">
+          <form class="form-inline">
+            <div class="form-group"><span id="podcast_counter" class="badge badge-primary">{{ numItems }}</span></div>
+            <div class="form-group">
+              <input v-model="search" class="form-control" type="text" placeholder="Filter podcasts..." aria-label="Search">
+            </div>
+          </form>
+        </div>
+
+        <div class="row">
+          <div v-for="(item, index) in podcastList.entry" v-show="!item.hidden" class="podcast col-lg-3" :key="index">
+            <a :href="'./podcast/' + item.id.attributes['im:id']" class="d-block figure">
+              <figure class="border rounded text-center">
+                ​<picture>
+                  <img :src="transformUrl(item['im:image'][1].label)" :alt="item['im:name'].label + ' cover thumbnail'" class="figure-img rounded-circle" />
+                </picture>
+                <figcaption class="figure-title">{{ item['im:name'].label }}</figcaption>
+                <figcaption class="figure-caption">Author: {{ item['im:artist'].label }}</figcaption>
+              </figure>
+            </a>
+          </div>
+        </div>
+      </section>
+    </template>

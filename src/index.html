@@ -4,149 +4,45 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Web based podcast player">
-    <meta name="author" content="Pablo Luaces Presas">
+    <meta name="author" content="Pablo Luaces Presas <pablo.luaces@gmail.com>">
     <title>Podcaster - Another podcast player</title>
+    
+    <!-- build:template
+    <% if (environment === 'dev') { %>
+    <base href="/podcaster/dev/" />
+    <% } else { %>
+    <base href="/podcaster/dist/" />
+    <% } %>
+    /build -->
 
-    <base href="/podcaster/src/" />
-    <link rel="icon" href="./resources/favicon.ico" />
-    <link rel="stylesheet" href="./resources/bootstrap-4/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./resources/custom.css" />
+    <link rel="icon" href="./resources/img/favicon.ico" />
+    <!-- build:template
+    <% if (environment === 'dev') { %>
+    <link rel="stylesheet" href="./resources/css/podcaster.merged.css" />
+    <% } else { %>
+    <link rel="stylesheet" href="./resources/css/podcaster.merged.min.css" />
+    <% } %>
+    /build -->
   </head>
   <body>
+    <!-- build:include templates/application.html -->
+    <p>Execute in terminal/console:</p>
+    <code>npm install<code>
+    <p>then</p>
+    <code>grunt development<code>
+    <p>or</p>
+    <code>grunt production<code>
+    <!-- /build -->
+    <!-- build:include templates/podcasts.html --><!-- /build -->
+    <!-- build:include templates/details.html --><!-- /build -->
+    <!-- build:include templates/episode.html --><!-- /build -->
 
-    <!-- Page header -->
-    <header>
-      <nav class="navbar border-bottom mb-4">
-        <a class="navbar-brand" href="./">Podcaster</a>
-      </nav>
-    </header>
-
-    <!-- VueJS App -->
-    <div id="app" class="container">
-      <keep-alive>
-        <transition name="slide">
-          <component v-bind:is="currentComponent"></component>
-        </transition>
-      </keep-alive>
-    </div>
-
-    <!-- Podcast List Template -->
-    <template id="podcasts_list">
-      <section class="container">
-
-        <div class="d-flex flex-row-reverse mb-4">
-          <form class="form-inline">
-            <div class="form-group"><span id="podcast_counter" class="badge badge-primary">{{ numItems }}</span></div>
-            <div class="form-group">
-              <input v-model="search" class="form-control" type="text" placeholder="Filter podcasts..." aria-label="Search">
-            </div>
-          </form>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-3" v-for="(item, index) in podcastList.entry" v-if="!item.hidden" :key="index">
-            <a :href="'./podcast/' + item.id.attributes['im:id']" class="d-block figure">
-              <figure class="border rounded text-center">
-                ​<picture>
-                  <img :src="item['im:image'][1].label" :alt="item['im:name'].label + ' cover thumbnail'" class="figure-img rounded-circle" />
-                </picture>
-                <figcaption class="figure-title">{{ item['im:name'].label }}</figcaption>
-                <figcaption class="figure-caption">Author: {{ item['im:artist'].label }}</figcaption>
-              </figure>
-            </a>
-          </div>
-        </div>
-      </section>
-    </template>
-
-    <!-- Podcast Detail Template -->
-    <template id="podcast_detail_page">
-      <div class="container">
-        <div class="row">
-          <aside class="col-lg-4 mb-4">
-            <div class="card">
-              <img class="card-img-top" :src="podcastDetails.artworkUrl100" :alt="podcastDetails.collectionCensoredName + ' cover image'" />
-              <div class="card-body">
-                <hr/>
-                <h5 class="card-title">{{ podcastDetails.collectionName }}</h5>
-                <h6 class="card-subtitle mb-2 font-italic">by {{ podcastDetails.artistName }}</h6>
-                <hr/>
-                <h6 class="mt-2 mb-2">Description:</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              </div>
-            </div>
-          </aside>
-          <section class="col">
-            <h4 class="border rounded p-3 mb-3">Episodes: {{ podcastDetails.trackCount }}</h3>
-
-            <div class="border rounded p-3">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th width="60%" scope="col">Title</th>
-                    <th width="20%" scope="col">Date</th>
-                    <th width="20%" scope="col">Duration</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><a href="#">Mark</a></td>
-                    <td>Otto</td>
-                    <td class="text-center">@mdo</td>
-                  </tr>
-                  <tr>
-                    <td><a href="#">Jacob</a></td>
-                    <td>Thornton</td>
-                    <td class="text-center">@fat</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </sectiom>
-        </div>
-      </div>
-    </template>
-
-    <!-- Episode Detail Template -->
-    <template id="episode_detail_page">
-      <div class="container">
-        <div class="row">
-          <aside class="col-lg-4 mb-4">
-            <div class="card">
-              <img class="card-img-top" src="https://is2-ssl.mzstatic.com/image/thumb/Podcasts118/v4/7d/4c/07/7d4c07d0-f8bd-05b8-5f5e-1ee2f990e5f7/mza_1307640737233665887.png/170x170bb-85.png" alt="Card image cap" />
-              <div class="card-body">
-                <hr/>
-                <h5 class="card-title">Song Exploder</h5>
-                <h6 class="card-subtitle mb-2 font-italic">by Song Exploder</h6>
-                <hr/>
-                <h6 class="mt-2 mb-2">Description:</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              </div>
-            </div>
-          </aside>
-          <section class="col">
-            <div class="border rounded p-3">
-              <h5>Wilco - Magnetized</h5>
-              <p class="font-italic">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut nibh euismod metus tempus sagittis vitae sed elit. Ut ut bibendum elit, eu volutpat ante. Vestibulum at nisi dui. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam porta non arcu eget interdum. Duis laoreet, mi in lacinia vehicula, orci lectus tincidunt sapien, eget tempor purus ante nec ex. Aliquam vehicula ornare volutpat. Integer sit amet molestie eros. Nulla luctus maximus sapien, ac mattis tellus tempus vel. Etiam vitae eleifend dui.</p>
-
-              <hr/>
-
-              <audio controls>
-                <source src="file.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-              </audio>
-            </div>
-          </sectiom>
-        </div>
-      </div>
-    </template>
-
-    <!-- JavaScript Files -->
-    <script src="./resources/jQuery/jquery-3.3.1.min.js"></script>
-    <script src="./resources/vue/vue.min.js"></script>
-    <script src="./resources/lodash.min.js"></script>
-    <script src="./resources/page.js"></script>
-    <script src="./resources/vue_components.js"></script>
-    <script src="./resources/vue_app.js"></script>
+    <!-- build:template
+    <% if (environment === 'dev') { %>
+    <script src="./resources/js/podcaster.merged.js"></script>
+    <% } else { %>
+    <script src="./resources/js/podcaster.merged.min.js"></script>
+    <% } %>
+    /build -->
   </body>
 </html>
