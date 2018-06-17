@@ -112,6 +112,7 @@ Vue.component('podcastDetail', {
 		// Gets a formatted episode duration
 		formattedDuration: function(duration){
 			if (duration == '') return '--'; // If duration is empty show --
+			if (duration.indexOf(':') > 0) return duration; // If duration have colon is yet formatted
 
 			var totalSeconds = parseInt(duration);
 			var hours = Math.floor(totalSeconds / 3600);
@@ -144,8 +145,32 @@ Vue.component('podcastDetail', {
 				if (typeof data.results[0] != 'undefined'){
 					temp = data.results[0];
 					temp.timestamp = Date.now();
+					temp.episodes = [];
 
-					//TODO: Get some data from RSS
+					$.get('https://cors.io/?' + temp.feedUrl, function(feedXml) {
+							$rssFeed = $(feedXml);
+
+							temp.description = $rssFeed.find('description:first').text();
+
+					    $rssFeed.find('item').each(function (){
+					        var el = $(this);
+									var episode = {};
+									episode.media = {};
+								  episode.title = el.find('title').text();
+									episode.date = self.formattedDate(el.find('pubDate').text());
+									episode.description = el.find('description').text();
+									episode.media.duration = self.formattedDuration(el.find('itunes\\:duration').text());
+									episode.media.link = el.find('enclosure').attr('url');
+									episode.media.type = el.find('enclosure').attr('type');
+									temp.episodes.push(episode);
+					    });
+
+							temp.trackCount = temp.episodes.length; // Correct the trackCount parameter because it is incorrect in some cases
+							self.$parent.saveData('podcastDetails_' + id , temp);
+							console.info('Podcast ' + id + ' data saved to Local Storage');
+							Vue.set(self, 'podcastDetails', temp);
+							self.$parent.loading = false;
+					}, 'XML');
 
 				}else console.error('Can\'t fetch the podcast data from Apple');
 			});
