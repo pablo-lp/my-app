@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+	Options +FollowSymLinks
+	RewriteEngine On
+
+	# Enviar peticiones via index.html
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_URI} !index
+	RewriteRule ^.*$ index.html [QSA,L,NE]
+</IfModule>

@@ -1,0 +1,105 @@
+/* ### HEADER ### */
+
+#podcast_counter{
+  font-size: 1.5rem;
+  margin-right: 0.3rem;
+}
+
+/* ### PODCASTS LIST ### */
+
+a.figure{
+  color: #000;
+  text-decoration: none !important;
+}
+
+figure{
+  width: 100%;
+  padding: 1.5rem;
+}
+
+a.figure:hover figure{
+  background-color: #007bff!important;
+}
+
+figure > picture{
+  display: inline-block;
+	position: relative;
+	width: 60%;
+  margin-bottom: 0.5rem;
+}
+
+figure > picture:before{
+	content: "";
+	display: block;
+	padding-top: 100%; 	/* initial ratio of 1:1*/
+}
+
+figure > picture > img{
+  width: 100%;
+  height: 100%;
+  position:  absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+figure .figure-title{
+  color: #000 !important;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+a.figure:hover .figure-title{
+  color: #fff !important;
+}
+
+figure .figure-caption{
+  font-size: 0.8rem;
+}
+
+a.figure:hover .figure-caption{
+  color: #ddd !important;
+}
+
+/* ### PODCAST EPISODES LIST ### */
+
+.table{
+  margin-bottom: 0;
+}
+
+.table thead th{
+  border-top: none;
+}
+
+/* ### COMPONENT EFFECT ### */
+
+.component {
+  transition: all .35s ease;
+  position: absolute;
+}
+
+.slide-enter {
+  opacity: 0;
+  transform: translate(30px, 0);
+}
+
+.slide-leave-active {
+  opacity: 0;
+  transform: translate(-30px, 0);
+}
+
+/* ### PODCAST & EPISODE DETAIL IMAGE ### */
+
+.card-img-top{
+  margin: 2rem 20% 0 20%;
+  border-radius: .5rem;
+  width: 60%;
+}
+
+/* ### HTML5 AUDIO PLAYER ### */
+
+audio{
+  width: 100%;
+}
